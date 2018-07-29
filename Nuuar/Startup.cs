@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Api.Database.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,7 +21,15 @@ namespace Nuuar
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            var connection = @"Data Source=(localdb)\v11.0;Initial Catalog=PenduDB;Integrated Security=True;User Id=pendu_user;Password=12345;MultipleActiveResultSets=True;";
+            services.AddDbContext<ApiContext>(options => options.UseSqlServer(connection));
         }
+
+//        protected void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//        {
+////#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+//            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;");
+//        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
